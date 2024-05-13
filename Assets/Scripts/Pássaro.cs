@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Pássaro : MonoBehaviour
 {
+    // Variável que determina a velocidade vertical do pássaro
     private float velocidadeVertical = 6f;
 
-    Rigidbody2D passaro;
+    // Variável para guardar o componente do pássaro
+    public Rigidbody2D passaro;
 
     void Start () {
-        // Obtém o componente para o pássaro
+        // Obtém o componente do pássaro
         passaro = GetComponent<Rigidbody2D> ();
     }
 
@@ -33,7 +35,7 @@ public class Pássaro : MonoBehaviour
         transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, Mathf.Clamp (rotacao, -30f, 30f)), 4f * Time.deltaTime);
     }
 
-    void OnCollisionEnter2D (Collision2D collision) {
+    void OnCollisionEnter2D (Collision2D colisao) {
         // Parar o jogo quando o pássaro colidir com algo
         Time.timeScale = 0f;
     }
