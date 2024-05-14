@@ -32,12 +32,12 @@ public class Pássaro : MonoBehaviour
         float rotacao = passaro.velocity.y * 10f;
 
         // Suaviza e limita a rotação do pássaro
-        transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, Mathf.Clamp (rotacao, -30f, 30f)), 4f * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, Mathf.Clamp (rotacao, -50f, 30f)), 4f * Time.deltaTime);
     }
 
     void OnCollisionEnter2D (Collision2D colisao) {
         // Parar o jogo quando o pássaro colidir com algo
-        Time.timeScale = 0f;
+        Time.timeScale = 0;
 
         // Atualiza a maior pontuação se necessário
         Pontuação.AtualizaMaiorPontuacao ();

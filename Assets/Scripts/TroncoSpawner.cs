@@ -11,17 +11,20 @@ public class TroncoSpawner : MonoBehaviour
     // Variável que determina a variação máxima de altura dos canos
     private float variaçãoAltura = 4f;
 
-    // Variável que determina o tempo até os troncos serem despawnados
-    private float tempoDespawn = 4.5f;
-
     // Variável que determina o intervalo entre o spawn dos troncos
     private float tempoSpawn = 1.5f;
 
-    // Variável que mantém controle de um contador de tempo
-    private float tempo = 0f;
+    // Variável que determina o tempo até os troncos serem despawnados
+    private float tempoDespawn = 4.5f;
 
-    // Variavel que mantém a altura de um obstáculo, que será utilizada para embasar a altura do próximo, a fim de não gerar deslocamentos impossíveis
-    private float alturaObstaculoAnterior = 0f;
+    // Variável que mantém controle de um contador de tempo
+    private float tempo = 0;
+
+    // Variavel que mantém a altura de um obstáculo, que será utilizada para embasar a altura do próximo obstáculo gerado
+    private float altura = 0;
+
+    // Variável que mantém o controle de variância para casos extremos, a fim de que não existam padrões impossíveis de serem superados
+    private float variancia = -2.5f;
 
     void Start ()
     {
@@ -41,7 +44,7 @@ public class TroncoSpawner : MonoBehaviour
             troncoSpawner ();
 
             // Reseta o contador
-            tempo = 0f;            
+            tempo = 0;            
         }
 
     }
@@ -53,10 +56,13 @@ public class TroncoSpawner : MonoBehaviour
         troncoClone = Instantiate (tronco);
 
         // Realiza um cálculo aleatório na altura de spawn, limitando-a para que não impossibilite o jogador de passar o obstáculo
-        alturaObstaculoAnterior = Mathf.Clamp (Random.Range (alturaObstaculoAnterior - 3f, alturaObstaculoAnterior + 3f), -variaçãoAltura, variaçãoAltura);
+        if (altura > variancia)
+            altura = Random.Range (-variaçãoAltura, variaçãoAltura);
+        else
+            altura = Random.Range (-variaçãoAltura, variaçãoAltura + variancia);
 
-        // Atualiza a posição do obstáculo em realização à altura calculada anteriormente
-        troncoClone.transform.position = transform.position + new Vector3 (0, alturaObstaculoAnterior, 0);
+        // Atualiza a altura do obstáculo
+        troncoClone.transform.position = transform.position + new Vector3 (0, altura, 0);
 
         // Realiza a destruição do objeto após 'tempoDespawn' segundos, para que não ocupe espaço desnecessário em memória
         Destroy (troncoClone, tempoDespawn);
