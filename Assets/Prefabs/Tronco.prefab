@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3094238274891284234}
-  - component: {fileID: 9171299281735323633}
+  - component: {fileID: 6976653970582440205}
+  - component: {fileID: 1585199305354485686}
   m_Layer: 0
   m_Name: Tronco
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 304640163076301170}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: -0.74, z: -0.011995685}
+  m_LocalPosition: {x: -3.17, y: -7, z: -0.011995685}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34,7 +35,7 @@ Transform:
   - {fileID: 1286685064516665071}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9171299281735323633
+--- !u!114 &6976653970582440205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,7 +47,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea60e18966ec1064eb198e16e7b0a52b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  troncoVelocidade: 5
+--- !u!61 &1585199305354485686
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304640163076301170}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 7.6, y: 7.1}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 1.9}
+  m_EdgeRadius: 0
 --- !u!1 &2261802361983843303
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,9 +102,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1286685064516665071}
   - component: {fileID: 4862302340099945788}
-  - component: {fileID: 3778495092592987808}
+  - component: {fileID: 2281261183842759321}
   m_Layer: 0
-  m_Name: troncoInf
+  m_Name: TroncoInferior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,9 +118,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2261802361983843303}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: -2.6200004, z: 0.011995685}
-  m_LocalScale: {x: 0.2, y: 0.3, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.1, y: 2.99, z: 0.011995685}
+  m_LocalScale: {x: 1, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3094238274891284234}
@@ -121,19 +166,19 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -151228294, guid: 5c6a3b718d1ecfe40b5661a0ad1ec43a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b14a8d4c53c977d4ba08b6fd6297b08c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.9375, y: 18.125}
+  m_Size: {x: 10.24, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &3778495092592987808
-BoxCollider2D:
+--- !u!70 &2281261183842759321
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -164,19 +209,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.9375, y: 18.125}
-    newSize: {x: 4.9375, y: 18.125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 4.9375, y: 18.125}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.5, y: -1}
+  m_Size: {x: 1.6, y: 6.9}
+  m_Direction: 0
 --- !u!1 &5041236407521579478
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,9 +222,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6059475093412239242}
   - component: {fileID: 4694106214992634088}
-  - component: {fileID: 165012095780597732}
+  - component: {fileID: 7283917373767056140}
   m_Layer: 0
-  m_Name: troncoSup
+  m_Name: TroncoSuperior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -203,13 +238,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5041236407521579478}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 4.22, z: 0.011995685}
-  m_LocalScale: {x: 0.2, y: 0.3, z: 1}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalPosition: {x: 7.1, y: 11.11, z: 0.011995685}
+  m_LocalScale: {x: 1, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3094238274891284234}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!212 &4694106214992634088
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -251,19 +286,19 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1144174656, guid: 22bb39b4673a3e44f87078b4362567d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b14a8d4c53c977d4ba08b6fd6297b08c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5, y: 18.125}
+  m_Size: {x: 10.24, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &165012095780597732
-BoxCollider2D:
+--- !u!70 &7283917373767056140
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -294,16 +329,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 18.125}
-    newSize: {x: 5, y: 18.125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5, y: 18.125}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.5, y: -1}
+  m_Size: {x: 1.6, y: 6.9}
+  m_Direction: 0

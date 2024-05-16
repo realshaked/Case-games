@@ -7,19 +7,26 @@ public class Pássaro : MonoBehaviour
     // Variável que determina a velocidade vertical do pássaro
     private float velocidadeVertical = 6f;
 
-    // Variável para guardar o componente do pássaro
+    // Variável para guardar o corpo do pássaro
     public Rigidbody2D passaro;
 
-    void Start () {
-        // Obtém o componente do pássaro
-        passaro = GetComponent<Rigidbody2D> ();
-    }
-
-    void Update () {
-        // Detecta se o botão foi pressionado (temporário para testes, vai virar touch depois -> mobile)
+    public void Update () {
+        // Detecta se o botão foi pressionado
         if (Input.GetMouseButtonDown (0)) {
             // Faz o pássaro ir para cima
             passaro.velocity = Vector2.up * velocidadeVertical;
+        }
+
+        // Detecta se há toque na tela
+        if (Input.touchCount > 0)
+        {
+            // Armazena o primeiro toque na tela
+            Touch toque = Input.GetTouch (0);
+
+            // Detecta a fase do toque (no caso, apenas encostar na tela é condição suficiente)
+            if (toque.phase == TouchPhase.Began)
+                // Faz o pássaro ir para cima
+                passaro.velocity = Vector2.up * velocidadeVertical;
         }
 
         // Aplica gravidade
@@ -35,11 +42,35 @@ public class Pássaro : MonoBehaviour
         transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, Mathf.Clamp (rotacao, -50f, 30f)), 4f * Time.deltaTime);
     }
 
-    void OnCollisionEnter2D (Collision2D colisao) {
-        // Parar o jogo quando o pássaro colidir com algo
-        Time.timeScale = 0;
+    public void OnEnable ()
+    {
+        // Obtém o componente do corpo do pássaro
+        passaro = GetComponent<Rigidbody2D> ();
 
-        // Atualiza a maior pontuação se necessário
-        Pontuação.AtualizaMaiorPontuacao ();
+        // Reinicia a posição do pássaro
+        transform.position = new Vector2 (transform.position.x, 0);
+
+        // Reinicia a velocidade do pássaro
+        passaro.velocity = Vector2.zero;
+
+        // Reinicia a rotação do pássaro
+        transform.rotation = Quaternion.Euler (0, 0, 0);
+    }
+
+    public void OnCollisionEnter2D (Collision2D colisao) {
+        // Obtém o objeto gerenciador do jogo
+        GerenciadorJogo gerenciador = FindObjectOfType<GerenciadorJogo>();
+
+        // Acessa a função que gerencia a tela de perder no jogo
+        gerenciador.Perdeu ();
+    }
+
+    public void OnTriggerEnter2D (Collider2D colisor)
+    {
+        // Obtém o objeto gerenciador do jogo
+        GerenciadorJogo gerenciador = FindObjectOfType<GerenciadorJogo>();
+
+        // Acessa a função que gerencia a pontuação
+        gerenciador.IncrementarPontuacao ();
     }
 }
