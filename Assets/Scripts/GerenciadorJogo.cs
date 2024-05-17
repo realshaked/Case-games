@@ -25,6 +25,16 @@ public class GerenciadorJogo : MonoBehaviour
     public GameObject botaoPause;
     public GameObject botaoMenu;
     public GameObject botaoVoltar;
+    public GameObject botaoVolume;
+    public GameObject botaoCreditos;
+    public GameObject controladorVolume;
+    public GameObject botaoVoltarMenuInicial;
+
+    // Variáveis que mantém os áudios do jogo
+    public AudioSource somVoo;
+    public AudioSource somPontos;
+    public AudioSource somColisao;
+    public AudioSource soundtrack;
 
     public void Awake ()
     {
@@ -44,14 +54,17 @@ public class GerenciadorJogo : MonoBehaviour
         // Atualiza o placar na tela
         pontuacaoTexto.text = pontuacao.ToString ();
 
-        // Determina os elementos gráficos visíveis e não visíveis durante o estado de jogo
+        // Determina os elementos de interface visíveis e não visíveis durante o estado de jogo
         botaoPause.SetActive (true);
+        botaoVolume.SetActive (false);
+        botaoCreditos.SetActive (false);
         botaoJogar.SetActive (false);
         botaoSkins.SetActive (false);
         botaoSair.SetActive (false);
-        perdeu.SetActive (false);
-        titulo.SetActive (false);
         botaoMenu.SetActive (false);
+        titulo.SetActive (false);
+        perdeu.SetActive (false);
+        controladorVolume.SetActive (false);
 
         // Remove o texto de maior pontuação da tela
         maiorPontuacaoTexto.text = "";
@@ -68,6 +81,57 @@ public class GerenciadorJogo : MonoBehaviour
 
         // Ativa o objeto pássaro
         passaro.SetActive (true);
+
+        // Inicializa a música de fundo
+        soundtrack.Play ();
+    }
+
+    // Método chamado ao clicar no botão 'Skins'
+    public void Skins ()
+    {
+        // Determina os elementos de interface visíveis e não visíveis no menu de skins
+        botaoJogar.SetActive (false);
+        botaoSair.SetActive (false);
+        botaoCreditos.SetActive (false);
+        botaoVolume.SetActive (false);
+        botaoSkins.SetActive (false);
+        controladorVolume.SetActive (false);
+        titulo.SetActive (false);
+        botaoVoltarMenuInicial.SetActive (true);
+    }
+
+    // Método chamado ao clicar no botão 'Volume'
+    public void Volume ()
+    {
+        // Ativa/Desativa o controlador de volume
+        if (controladorVolume.activeSelf)
+            controladorVolume.SetActive (false);
+        else
+            controladorVolume.SetActive (true);
+    }
+
+    // Método chamado ao clicar no botão 'Créditos'
+    public void Creditos ()
+    {
+        // Determina os elementos de interface visíveis e não visíveis no menu de créditos
+        botaoJogar.SetActive (false);
+        botaoSkins.SetActive (false);
+        botaoSair.SetActive (false);
+        botaoCreditos.SetActive (false);
+        botaoVolume.SetActive (false);
+        controladorVolume.SetActive (false);
+        titulo.SetActive (false);
+        botaoVoltarMenuInicial.SetActive (true);
+    }
+
+    // Método que lida com o controlador de volume
+    public void ControladorVolume (float volume)
+    {
+        // Atualiza o volume dos sons no jogo
+        somColisao.volume = volume;
+        somPontos.volume = volume;
+        somVoo.volume = volume;
+        soundtrack.volume = volume;
     }
 
     // Método chamado ao clicar no botão 'Pause'
@@ -76,21 +140,26 @@ public class GerenciadorJogo : MonoBehaviour
         // Congela o tempo
         Time.timeScale = 0;
 
-        // Determina os elementos gráficos visíveis e não visíveis no menu de pausa
+        // Pausa a música
+        soundtrack.Pause ();
+
+        // Determina os elementos de interface visíveis e não visíveis no menu de pausa
         botaoPause.SetActive (false);
         botaoSair.SetActive (true);
         botaoVoltar.SetActive (true);
         botaoMenu.SetActive (true);
+        botaoVolume.SetActive (true);
     }
 
     // Método chamado ao clicar no botão 'Voltar'
     public void Voltar ()
     {
-        // Determina os elementos gráficos visíveis e não visíveis ao voltar para o jogo
+        // Determina os elementos de interface visíveis e não visíveis ao voltar para o jogo
         botaoSair.SetActive (false);
         botaoMenu.SetActive (false);
         botaoVoltar.SetActive (false);
-        botaoPause.SetActive (true);
+        botaoVolume.SetActive (false);
+        controladorVolume.SetActive (false);
 
         // Obtém o elemento do corpo do pássaro
         Rigidbody2D corpo = passaro.GetComponent<Rigidbody2D> ();
@@ -105,19 +174,29 @@ public class GerenciadorJogo : MonoBehaviour
     // Método para despausar o jogo
     public IEnumerator Despausar ()
     {
-        // Inicia um timer de 3 segundos para realizar a próxima ação
+        // Inicia um timer de 2 segundos para realizar a próxima ação
         yield return new WaitForSecondsRealtime (2);
 
         // Descongela o jogo
         Time.timeScale = 1;
+
+        // Retorna a visibilidade do botão de pause
+        botaoPause.SetActive (true);
+
+        // Despausa a música
+        soundtrack.UnPause ();
     }
 
+    // Método chamado ao clicar no botão 'Menu'
     public void Menu ()
     {
-        // Determina os elementos gráficos visíveis e não visíveis no menu
+        // Determina os elementos de interface visíveis e não visíveis no menu
         botaoVoltar.SetActive (false);
         botaoMenu.SetActive (false);
         perdeu.SetActive (false);
+        controladorVolume.SetActive (false);
+        botaoVolume.SetActive (true);
+        botaoCreditos.SetActive (true);
         botaoJogar.SetActive (true);
         botaoSkins.SetActive (true);
         titulo.SetActive (true);
@@ -137,10 +216,23 @@ public class GerenciadorJogo : MonoBehaviour
         Pausar ();
     }
 
+    // Método chamado quando o botão 'Voltar' é clicado nos menus de skins e créditos
+    public void VoltarMenuInicial ()
+    {
+        // Determina os elementos de interface visíveis e não visíveis na tela inicial do jogo
+        botaoJogar.SetActive (true);
+        botaoSair.SetActive (true);
+        botaoSkins.SetActive (true);
+        botaoCreditos.SetActive (true);
+        botaoVolume.SetActive (true);
+        botaoVoltarMenuInicial.SetActive (false);
+        titulo.SetActive (true);
+    }
+
     // Método para congelar o tempo e desativar o objeto do pássaro
     public void Pausar ()
     {
-        // Para o tempo
+        // Congela o tempo
         Time.timeScale = 0;
 
         // Desativa o objeto do pássaro
@@ -155,12 +247,21 @@ public class GerenciadorJogo : MonoBehaviour
 
         // Atualiza a pontuação na tela
         pontuacaoTexto.text = pontuacao.ToString ();
+
+        // Toca o som de pontos
+        somPontos.Play ();
     }
 
     // Método chamado quando o jogador perde
     public void Perdeu ()
     {
-        // Determina os elementos gráficos visíveis e não visíveis na tela de derrota
+        // Toca o som de colisão
+        somColisao.Play ();
+
+        // Para a música de fundo
+        soundtrack.Stop ();
+
+        // Determina os elementos de interface visíveis e não visíveis na tela de derrota
         perdeu.SetActive (true);
         botaoJogar.SetActive (true);
         botaoSair.SetActive (true);
@@ -183,8 +284,15 @@ public class GerenciadorJogo : MonoBehaviour
         // Mostra a maior pontuação na tela
         maiorPontuacaoTexto.text = "Maior pontuação: " + maiorPontuacao;
 
-        // Congela o jogo
+        // Congela o tempo
         Time.timeScale = 0;
+    }
+
+    // Método para tocar o som de vôo
+    public void PlaySomVoo ()
+    {
+        // Toca o som de vôo
+        somVoo.Play ();
     }
 
     // Método chamado ao clicar no botão 'Sair'
