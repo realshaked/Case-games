@@ -11,21 +11,21 @@ public class Pássaro : MonoBehaviour
     private float tempo = 0.5f;
 
     // Variável para guardar o corpo do pássaro
-    public Rigidbody2D passaro;
+    private Rigidbody2D passaro;
 
     // Variável para armazenar o gerenciador do jogo
-    public GerenciadorJogo gerenciador;
+    private GerenciadorJogo gerenciador;
 
-    public void Awake ()
+    private void Awake ()
     {
         // Pega o componente do corpo do pássaro
         passaro = GetComponent<Rigidbody2D> ();
 
         // Pega o gerenciador do jogo
-        gerenciador = FindObjectOfType<GerenciadorJogo>();
+        gerenciador = FindObjectOfType<GerenciadorJogo> ();
     }
 
-    public void Update () {
+    private void Update () {
         // Atualiza o contador de tempo
         tempo += Time.deltaTime;
 
@@ -90,7 +90,7 @@ public class Pássaro : MonoBehaviour
         transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.Euler (0, 0, Mathf.Clamp (rotacao, -50f, 30f)), 4f * Time.deltaTime);
     }
 
-    public void OnEnable ()
+    private void OnEnable ()
     {
         // Reinicia a posição do pássaro
         transform.position = new Vector2 (transform.position.x, 0);
@@ -102,12 +102,12 @@ public class Pássaro : MonoBehaviour
         transform.rotation = Quaternion.Euler (0, 0, 0);
     }
 
-    public void OnCollisionEnter2D (Collision2D colisao) {
+    private void OnCollisionEnter2D (Collision2D colisao) {
         // Acessa a função que gerencia a tela de perder no jogo
         gerenciador.Perdeu ();
     }
 
-    public void OnTriggerEnter2D (Collider2D colisor)
+    private void OnTriggerEnter2D (Collider2D colisor)
     {
         // Acessa a função que gerencia a pontuação
         gerenciador.IncrementarPontuacao ();

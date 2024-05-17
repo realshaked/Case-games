@@ -7,7 +7,7 @@ public class Chão : MonoBehaviour
     // Variável para determinar a velocidade que o chão se move
     private float velocidade = 4f;
 
-    void Update ()
+    private void Update ()
     {
         // Move o chão para a esquerda
         transform.position += Vector3.left * velocidade * Time.deltaTime;

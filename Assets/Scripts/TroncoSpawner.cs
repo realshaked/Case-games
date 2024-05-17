@@ -19,13 +19,13 @@ public class TroncoSpawner : MonoBehaviour
     // Variável que mantém a altura de um obstáculo, que será utilizada para embasar a altura do próximo obstáculo gerado
     private float altura;
 
-    void Start ()
+    private void Start ()
     {
         // Chama a função para spawnar obstáculos
         troncoSpawner ();
     }
 
-    void Update ()
+    private void Update ()
     {
         // Atualiza o contador de tempo
         tempo += Time.deltaTime;
@@ -43,7 +43,7 @@ public class TroncoSpawner : MonoBehaviour
     }
 
     // Método para gerar clones do tronco original
-    void troncoSpawner ()
+    private void troncoSpawner ()
     {
         // Gera uma instância de tronco (clone do tronco original)
         GameObject troncoClone = Instantiate (tronco);

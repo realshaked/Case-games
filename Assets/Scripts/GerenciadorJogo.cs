@@ -9,14 +9,17 @@ public class GerenciadorJogo : MonoBehaviour
     // Variável que mantém a pontuação atual
     private int pontuacao;
 
-    // Variável que mantém o objeto do pássaro
-    public GameObject passaro;
+    // Vetor que contém as skins
+    public GameObject[] skins = new GameObject[2];
+
+    // Variável que armazena o objeto do pássaro
+    private GameObject passaro;
 
     // Variáveis que mantém os textos da pontuação atual e da maior pontuação
     public TextMeshPro pontuacaoTexto;
     public TextMeshPro maiorPontuacaoTexto;
 
-    // Variáveis que mantém os elementos gráficos do jogo
+    // Variáveis que mantém os elementos de interface do jogo
     public GameObject titulo;
     public GameObject perdeu;
     public GameObject botaoJogar;
@@ -29,6 +32,7 @@ public class GerenciadorJogo : MonoBehaviour
     public GameObject botaoCreditos;
     public GameObject controladorVolume;
     public GameObject botaoVoltarMenuInicial;
+    public GameObject seletorSkins;
 
     // Variáveis que mantém os áudios do jogo
     public AudioSource somVoo;
@@ -36,14 +40,20 @@ public class GerenciadorJogo : MonoBehaviour
     public AudioSource somColisao;
     public AudioSource soundtrack;
 
-    public void Awake ()
+    private void Awake ()
     {
+        // Limita o jogo para rodar a 60 frames por segundo
+        Application.targetFrameRate = 60;
+
+        // Atualiza a skin no jogo
+        passaro = skins[0];
+
         // Chama a função 'Pausar'
         Pausar ();
     }
 
     // Método chamado ao clicar no botão 'Jogar'
-    public void Jogar ()
+    private void Jogar ()
     {
         // Desativa o objeto do pássaro
         passaro.SetActive (false);
@@ -70,7 +80,7 @@ public class GerenciadorJogo : MonoBehaviour
         maiorPontuacaoTexto.text = "";
 
         // Cria um vetor de elementos para armazenar os troncos existentes no jogo
-        TroncoScript[] troncos = FindObjectsOfType<TroncoScript>();
+        TroncoScript[] troncos = FindObjectsOfType<TroncoScript> ();
 
         // Destrói os troncos presentes no jogo para reiniciar
         for (int i = 0; i < troncos.Length; i++)
@@ -87,7 +97,7 @@ public class GerenciadorJogo : MonoBehaviour
     }
 
     // Método chamado ao clicar no botão 'Skins'
-    public void Skins ()
+    private void Skins ()
     {
         // Determina os elementos de interface visíveis e não visíveis no menu de skins
         botaoJogar.SetActive (false);
@@ -98,10 +108,18 @@ public class GerenciadorJogo : MonoBehaviour
         controladorVolume.SetActive (false);
         titulo.SetActive (false);
         botaoVoltarMenuInicial.SetActive (true);
+        seletorSkins.SetActive (true);
+    }
+
+    // Método que lida com o seletor de skins
+    public void SeletorSkins (int numero)
+    {
+        // Coloca a skin selecionada como pássaro atual
+        passaro = skins[numero];
     }
 
     // Método chamado ao clicar no botão 'Volume'
-    public void Volume ()
+    private void Volume ()
     {
         // Ativa/Desativa o controlador de volume
         if (controladorVolume.activeSelf)
@@ -111,7 +129,7 @@ public class GerenciadorJogo : MonoBehaviour
     }
 
     // Método chamado ao clicar no botão 'Créditos'
-    public void Creditos ()
+    private void Creditos ()
     {
         // Determina os elementos de interface visíveis e não visíveis no menu de créditos
         botaoJogar.SetActive (false);
@@ -125,7 +143,7 @@ public class GerenciadorJogo : MonoBehaviour
     }
 
     // Método que lida com o controlador de volume
-    public void ControladorVolume (float volume)
+    private void ControladorVolume (float volume)
     {
         // Atualiza o volume dos sons no jogo
         somColisao.volume = volume;
@@ -135,7 +153,7 @@ public class GerenciadorJogo : MonoBehaviour
     }
 
     // Método chamado ao clicar no botão 'Pause'
-    public void menuPause ()
+    private void menuPause ()
     {
         // Congela o tempo
         Time.timeScale = 0;
@@ -152,7 +170,7 @@ public class GerenciadorJogo : MonoBehaviour
     }
 
     // Método chamado ao clicar no botão 'Voltar'
-    public void Voltar ()
+    private void Voltar ()
     {
         // Determina os elementos de interface visíveis e não visíveis ao voltar para o jogo
         botaoSair.SetActive (false);
@@ -169,13 +187,25 @@ public class GerenciadorJogo : MonoBehaviour
 
         // Chama um método para despausar após 2 segundos
         StartCoroutine (Despausar ());
+
+        // Informa o jogador que o jogo voltará em 2 segundos
+        maiorPontuacaoTexto.text = "Despausando em 2...";
     }
 
     // Método para despausar o jogo
-    public IEnumerator Despausar ()
+    private IEnumerator Despausar ()
     {
-        // Inicia um timer de 2 segundos para realizar a próxima ação
-        yield return new WaitForSecondsRealtime (2);
+        // Inicia um timer de 1 segundo para realizar a próxima ação
+        yield return new WaitForSecondsRealtime (1);
+
+        // Informa o jogador que o jogo voltará em 1 segundo
+        maiorPontuacaoTexto.text = "Despausando em 1...";
+
+        // Inicia um timer de 1 segundo para realizar a próxima ação
+        yield return new WaitForSecondsRealtime (1);
+
+        // Apaga o texto da tela
+        maiorPontuacaoTexto.text = "";
 
         // Descongela o jogo
         Time.timeScale = 1;
@@ -188,7 +218,7 @@ public class GerenciadorJogo : MonoBehaviour
     }
 
     // Método chamado ao clicar no botão 'Menu'
-    public void Menu ()
+    private void Menu ()
     {
         // Determina os elementos de interface visíveis e não visíveis no menu
         botaoVoltar.SetActive (false);
@@ -206,7 +236,7 @@ public class GerenciadorJogo : MonoBehaviour
         maiorPontuacaoTexto.text = "";
 
         // Cria um vetor de elementos para armazenar os troncos existentes no jogo
-        TroncoScript[] troncos = FindObjectsOfType<TroncoScript>();
+        TroncoScript[] troncos = FindObjectsOfType<TroncoScript> ();
 
         // Destrói os troncos presentes no jogo para reiniciar
         for (int i = 0; i < troncos.Length; i++)
@@ -217,7 +247,7 @@ public class GerenciadorJogo : MonoBehaviour
     }
 
     // Método chamado quando o botão 'Voltar' é clicado nos menus de skins e créditos
-    public void VoltarMenuInicial ()
+    private void VoltarMenuInicial ()
     {
         // Determina os elementos de interface visíveis e não visíveis na tela inicial do jogo
         botaoJogar.SetActive (true);
@@ -225,12 +255,13 @@ public class GerenciadorJogo : MonoBehaviour
         botaoSkins.SetActive (true);
         botaoCreditos.SetActive (true);
         botaoVolume.SetActive (true);
-        botaoVoltarMenuInicial.SetActive (false);
         titulo.SetActive (true);
+        botaoVoltarMenuInicial.SetActive (false);
+        seletorSkins.SetActive (false);
     }
 
     // Método para congelar o tempo e desativar o objeto do pássaro
-    public void Pausar ()
+    private void Pausar ()
     {
         // Congela o tempo
         Time.timeScale = 0;
@@ -296,7 +327,7 @@ public class GerenciadorJogo : MonoBehaviour
     }
 
     // Método chamado ao clicar no botão 'Sair'
-    public void Sair ()
+    private void Sair ()
     {
         // Fecha o jogo
         Application.Quit ();
