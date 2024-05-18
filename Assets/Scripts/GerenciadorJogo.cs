@@ -33,6 +33,7 @@ public class GerenciadorJogo : MonoBehaviour
     public GameObject controladorVolume;
     public GameObject botaoVoltarMenuInicial;
     public GameObject seletorSkins;
+    public GameObject menuCreditos;
 
     // Variáveis que mantém os áudios do jogo
     public AudioSource somVoo;
@@ -139,7 +140,11 @@ public class GerenciadorJogo : MonoBehaviour
         botaoVolume.SetActive (false);
         controladorVolume.SetActive (false);
         titulo.SetActive (false);
+        menuCreditos.SetActive (true);
         botaoVoltarMenuInicial.SetActive (true);
+
+        // Muda a posição do botão voltar para que não atrapalhe os créditos
+        botaoVoltarMenuInicial.transform.position = transform.position + new Vector3 (0, botaoSkins.transform.position.y);
     }
 
     // Método que lida com o controlador de volume
@@ -258,6 +263,10 @@ public class GerenciadorJogo : MonoBehaviour
         titulo.SetActive (true);
         botaoVoltarMenuInicial.SetActive (false);
         seletorSkins.SetActive (false);
+        menuCreditos.SetActive (false);
+
+        // Reinicia a posição do botão 'Voltar'
+        botaoVoltarMenuInicial.transform.position = transform.position + new Vector3 (0, botaoSair.transform.position.y);
     }
 
     // Método para congelar o tempo e desativar o objeto do pássaro
