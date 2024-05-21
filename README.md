@@ -1,2 +1,2 @@
-# DodgeJumpers
-Projeto de um jogo inspirado no flappy bird
+# Dodge Jumpers
+Projeto de um jogo inspirado em flappy bird
